@@ -11,11 +11,13 @@ Below is a screenshot of the webapp
 
 ### Project Components
 1. ETL Pipeline
+
 In process_data.py
-	Load the messages and categories datasets
-	Merges the two datasets
-	Cleans the data
-	Stores it in a SQLite database
+
+	- Load the messages and categories datasets
+    - Merges the two datasets
+	- Cleans the data
+	- Stores it in a SQLite database
 
 2. ML Pipeline
 In train_classifier.py
