@@ -5,7 +5,7 @@ The project includes a web app where an emergency worker can type a message and 
 
 Below is a screenshot of the webapp
 
-[my image](Webapp.png)
+![my image](Webapp.png)
 
 
 
