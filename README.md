@@ -10,27 +10,23 @@ Below is a screenshot of the webapp
 
 
 ### Project Components
-1. ETL Pipeline
-
-In process_data.py
+1. ETL Pipeline "process_data.py"
 
 	- Load the messages and categories datasets
     - Merges the two datasets
 	- Cleans the data
 	- Stores it in a SQLite database
 
-2. ML Pipeline
-In train_classifier.py
-	Load data from SQLite database
-    Split the dataset into training and test sets
-    Build text processing and machine learning pipeline
-    Train and tune model using GridSearchCV
-    Output results
-    Export final model as a pickle file
+2. ML Pipeline "train_classifier.py"
+	- Load data from SQLite database
+	- Split the dataset into training and test sets
+	- Build text processing and machine learning pipeline
+    - Train and tune model using GridSearchCV
+    - Output results
+    - Export final model as a pickle file
     
 3. Flask Web App
-Much of these was already provided
-	Modified file paths for database and model as needed
+	- Modified file paths for database and model as needed
 
 
 
