@@ -28,9 +28,17 @@ lemmatizer = WordNetLemmatizer()
 
 
 def load_data(database_filepath):
+    '''
+    This function loads the data from the sql lite database, pulls X variable (message),
+    Y outcome (multiclass) variables and category_names for the Y columns
+    Input: database_filepath
+    Output: X, Y and category_names
+    '''
+    # Connect with SQLLite database and load file
     engine = create_engine(os.path.join('sqlite:///',database_filepath))
     connection = engine.connect()
     df = pd.read_sql('CleanMessages', connection)
+    # Create X, a pd Series of messages
     X = df.message
     category_names = df.columns[4:].tolist()
     Y = df.drop(columns= ['id','original','message','genre']).values
@@ -38,6 +46,12 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    This function normalizes case, remove punctuations, tokenize and lematize text
+    and remove stop words
+    Input: text
+    Ouput: tokens
+    '''
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
@@ -50,6 +64,11 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    This function defines parameters and model pipeline
+    Input: None
+    Output: model
+    '''
     parameters = {'vect__ngram_range': ((1, 1), (1, 2))
 #               'vect__max_df': (0.5, 0.75, 1.0)
 #               'vect__max_features': (None, 5000, 10000)
@@ -69,14 +88,13 @@ def build_model():
 
 
 def evaluate_model(model, X_test, y_test, category_names):
+    '''
+    This function evaluates model by predicting test data and comparing with actual
+    It also provide vital starts for each class, stats include accuracy, precision e.t.c.
+    Input: model, X_test, y_test, category_names
+    Output: evaluation results
+    '''
     y_pred = model.predict(X_test)
-#     labels = np.unique(y_pred)
-#     confusion_mat = confusion_matrix(y_test, y_pred, labels=labels)
-#     accuracy = (y_pred == y_test).mean()
-    
-#     print("Labels:", labels)
-#     print("Confusion Matrix:\n", confusion_mat)
-#     print("Accuracy:", accuracy)
     print("\nBest Parameters:", model.best_params_)
     
     for i in range(y_test.shape[1]):
@@ -85,6 +103,11 @@ def evaluate_model(model, X_test, y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    This function saves the ml model as a pickle file
+    Input: model, model_filepath
+    Output: None
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
 
 
