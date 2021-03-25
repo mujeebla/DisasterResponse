@@ -43,6 +43,12 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    top_10_counts = df.iloc[:,4:].sum(axis=0).sort_values(ascending=False)[:10].values.tolist()
+    top_10_names = df.iloc[:,4:].sum(axis=0).sort_values(ascending=False)[:10].index.tolist()
+    
+    bottom_10_counts = df.iloc[:,4:].sum(axis=0).sort_values()[:10].values.tolist()
+    bottom_10_names = df.iloc[:,4:].sum(axis=0).sort_values()[:10].index.tolist()
+    
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -61,6 +67,42 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=top_10_names,
+                    y=top_10_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of most represented categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Categories"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=bottom_10_names,
+                    y=bottom_10_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of least represented categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Categories"
                 }
             }
         }
